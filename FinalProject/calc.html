@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Unusual Calculator</title>
-    <link rel="icon" href="/Users/juliavister/Documents/GitHub/Web-development/FinalProject/guitar (1).ico" type="image/x-icon">
+    <link rel="icon" href="/images/guitar%20(1).ico" type="image/x-icon">
     <style>
         body {
             background: linear-gradient(-45deg, #f2eee3, #e9d1d0, #fae0ba, #eb8c73, #f0ded1, #dec4a7 );
@@ -87,9 +87,19 @@
             right: 20px;
             transform: rotate(180deg);
         }
+        .container::before{
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+            background: linear-gradient(to right, #ffc2c2, #ffd7a8 );
+        }
     </style>
 </head>
 <body>
+<div class="container" >
 <div id="calculator">
     <h1 id="header">Unusual Calculator</h1>
     <input type="text" id="ints" placeholder="Integers" />
@@ -111,6 +121,7 @@
         <label for="background-color">Background Color:</label>
         <input type="color" id="backgroundColorPicker" onchange="BackGroundChange('background')" value="#000000">
     </div>
+</div>
 </div>
 
 <img class="picture" src="calc.png" alt="Picture">
@@ -160,6 +171,26 @@
         var color = document.getElementById("foreGroundColorPicker").value;
         input.style.color = color;
         result.style.color = color;
+    }
+    function SaveData(){
+        const argumentsField = document.getElementById("ints").value;
+        const operationField = document.getElementById("operation").value;
+        const resultField = document.getElementById("result").value;
+
+        var fname = prompt("Name your file: ", "data.txt")
+        if(fname){
+            var data = "Integers: " + args + "\n" + "operation: " + operation + "\n" + "result: " + result;
+            var DataToBlob = new Blob([data], { type: "text/plain" });
+            var a = document.createElement('a');
+            a.href = window.URL.createObjectURL(DataToBlob)
+            a.download = fname;
+            document.body.appendChild(a);
+            a.click()
+
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(a.href);
+
+        }
     }
 </script>
 </body>
